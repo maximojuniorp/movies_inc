@@ -2,9 +2,12 @@ import { StyleSheet, SafeAreaView, Text, View, FlatList } from 'react-native';
 import MovieCard from '../components/MovieCard';
 
 import { MOVIES_LIST } from '../data'
+import { useNavigation } from '@react-navigation/native';
 const IMG_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 
 export default function HomeScreen() {
+
+   const  navigator = useNavigation();
 
     // Sort
     const sortedMovies = MOVIES_LIST.sort( (a, b) => a.title.localeCompare(b.title));
@@ -13,11 +16,11 @@ export default function HomeScreen() {
 
 
    function selectedItemHandle(id){
-          
+         navigator.navigate('MovieDetails', { id })
     }
 
     return (
-        <SafeAreaView style={{ backgroundColor: '#f3e4f1'}}>
+        <SafeAreaView style={styles.container}>
          
             <View style={styles.header}>
                 <Text style={styles.headerTitle}>Movie Inc</Text>
@@ -45,6 +48,10 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+    
+    container: {
+        backgroundColor: '#F7F9FC'
+    },
 
     header:{
       flex: 1,
@@ -59,11 +66,11 @@ const styles = StyleSheet.create({
       paddingVertical: 20,
       borderBottomEndRadius: 40,
       borderBottomStartRadius: 40,
-      backgroundColor: 'white',
+      backgroundColor: '#366DC7',
     },
 
     headerTitle:{
-       color: 'black',
+       color: 'white',
        fontSize: 20,
        fontStyle: 'italic',
        letterSpacing: 0.5,

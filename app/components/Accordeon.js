@@ -15,7 +15,7 @@ export default function Accordeon({ title, children, open = false }) {
          <Pressable onPress={toggle}>
             <View style={styles.header}>
                <Text numberOfLines={1} style={styles.title}>{title}</Text>
-               { isOpen? <FeatherIcon name='chevron-up' size={30}/> :  <FeatherIcon name='chevron-down' size={30} />  }
+               { isOpen? <FeatherIcon name='chevron-up'  size={30} color="#495057"/> :  <FeatherIcon name='chevron-down' size={30} color="#495057" />  }
             </View>
          </Pressable>
          <View style={[styles.body, isOpen ? styles.bodyOpen : null]}>
@@ -27,8 +27,8 @@ export default function Accordeon({ title, children, open = false }) {
 
 const styles = StyleSheet.create({
    container: {
-        borderBottomWidth: 2,
-        borderBottomColor: 'gray'
+        borderBottomWidth: 1,
+        borderBottomColor: '#ADB5BD'
    },
    header: {
       flexDirection: 'row',
@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
       fontSize: 16,
       fontWeight: 600,
       letterSpacing: 0.8,
-      width: '70%'
+      width: '70%',
+      color: '#495057'
    },
    body: {
       height: 0,

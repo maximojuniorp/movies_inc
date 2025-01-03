@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
         borderRadius: 24,
         marginBottom: 24,
         backgroundColor: '#fff',
+        elevation: 2
     },
 
     // Header
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
     cardTitle: {
         fontSize: 19,
         fontWeight: '700',
-        color: '#222',
+        color: '#495057',
         letterSpacing: 0.4
     },
     cardContent: {
@@ -124,11 +125,11 @@ const styles = StyleSheet.create({
     cardSubtitle: {
         fontSize: 13,
         fontWeight: '500',
-        color: 'gray',
+        color: '#6C757D',
     },
     cardDescription: {
         fontSize: 12,
         fontWeight: '400',
-        color: 'gray'
+        color: '#6C757D'
     }
 })

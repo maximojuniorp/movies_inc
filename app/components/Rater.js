@@ -39,7 +39,7 @@ export default function Rater({ maxRate, value, onChange, onSubmit }) {
                         <Icon
                             name="star"
                             size={30}
-                            color={rate >= index + 1 ? 'red' : 'gray'} />
+                            color={rate >= index + 1 ? '#3F80EA' : 'gray'} />
                     </Pressable>
                 ))
                 }
@@ -66,7 +66,8 @@ export default function Rater({ maxRate, value, onChange, onSubmit }) {
 
 const styles = StyleSheet.create({
     container: {
-        gap: 5
+        gap: 5,
+        paddingVertical: 3
     },
     starsContainer: {
         flexDirection: 'row',
@@ -92,10 +93,10 @@ const styles = StyleSheet.create({
         letterSpacing: 0.6
     },
     buttonCancel: {
-        backgroundColor: 'red'
+        backgroundColor: '#D9534F'
     },
     buttonSend: {
-        backgroundColor: 'green'
+        backgroundColor: '#3F80EA'
     }
 
 })
