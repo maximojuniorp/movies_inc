@@ -1,23 +1,22 @@
 import { View, Text, Image, StyleSheet, Pressable, ScrollView, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import Accordeon from '../components/Accordeon'
-import Rater from '../components/Rater'
+
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
 import { useContext, useEffect, useState } from 'react';
-import { addFavorite, removeFavorite, addRating, getMovieCredits, getMovieDetails } from '../services/api';
+import { addFavorite, removeFavorite, getMovieCredits, getMovieDetails } from '../services/api';
 import { AppContext } from '../contexts/AppContext';
 
 import { IMG_BASE_URL } from '../config/appConfig'
+import MovieRating from '../components/MovieRating';
 
 export default function MovieDetailsScreen({ route }) {
 
     const {
         showGlobalLoading,
         hideGlobalLoading,
-        rateMovie,
         addRemoveFavoriteMovie,
-        ratedMovies,
         favoriteMovies
     } = useContext(AppContext)
 
@@ -27,8 +26,6 @@ export default function MovieDetailsScreen({ route }) {
     const [movie, setMovie] = useState(null);
     const [credits, setCredits] = useState(null);
 
-    const [rate, setRate] = useState(0);
-    const [pendingRate, setPendingRate] = useState(false);
 
     const isFavorite = favoriteMovies.indexOf(movie_id) >= 0;
 
@@ -37,13 +34,7 @@ export default function MovieDetailsScreen({ route }) {
         fetchMovieCredits();
     }, [])
 
-    useEffect(() => {
-        const movieRated = ratedMovies.find(item => item.id == movie_id);
-        if (movieRated) {
-            setRate(() => movieRated.rating)
-        }
-    }, [ratedMovies])
-
+   
     function navigateBack() {
         navigation.goBack();
     }
@@ -73,31 +64,10 @@ export default function MovieDetailsScreen({ route }) {
         }
     }
 
-    async function onChangeRateHandle(rate) {
-        setRate(() => rate)
-        setPendingRate(() => true)
-    }
-
-    async function addRateHandle() {
-        try {
-            showGlobalLoading();
-            await addRating(movie_id, rate);
-            rateMovie({ id: movie_id, rating: rate });
-            hideGlobalLoading();
-        }
-        catch (error) {
-            console.log(error)
-            Alert.alert("Error", 'Ha ocurrido un error');
-            hideGlobalLoading()
-        }
-        finally {
-            setPendingRate(() => false)
-        }
-    }
 
     async function toggleFavoriteHandle() {
         try {
-            showGlobalLoading();
+            showGlobalLoading('', 'rgba(0, 0, 0, 0.4)');
             if (isFavorite) {
                 await removeFavorite(movie_id);
             } else {
@@ -113,23 +83,11 @@ export default function MovieDetailsScreen({ route }) {
         }
     }
 
-    function cancelSendRateHandle(){
-        setPendingRate( () => false);
-        const prevRate = ratedMovies.find( i => i.id == movie_id);
-        if(prevRate){
-            setRate( () => prevRate.rating);
-            return;
-        }
-
-        setRate( () => 0)
-    }
-
    
     return (
         <View style={styles.container}>
 
             {movie &&
-
                 <View style={styles.card}>
 
                     <View style={styles.cardHeader}>
@@ -144,7 +102,6 @@ export default function MovieDetailsScreen({ route }) {
                             resizeMode="contain"
                             source={{ uri: IMG_BASE_URL + movie.poster_path }}
                             style={styles.cardPoster} />
-
 
                         <View style={styles.icon}>
                             <Pressable onPress={navigateBack}>
@@ -200,29 +157,7 @@ export default function MovieDetailsScreen({ route }) {
                             </View>
                         </View>
 
-                        <View >
-                            <Text style={styles.cardSubtitle}>{ rate <= 0? 'Calificar pelicula' : 'Mi calificación' } </Text>
-                            <Rater maxRate={10} value={rate} onChange={onChangeRateHandle} />
-
-                            {pendingRate &&
-                                <View style={styles.buttonsContainer}>
-                                    <Pressable
-                                        onPress={cancelSendRateHandle}>
-                                        <View style={[styles.button, styles.buttonCancel]}>
-                                            <Text style={styles.buttonText}>Cancelar</Text>
-                                        </View>
-                                    </Pressable>
-
-                                    <Pressable
-                                        onPress={addRateHandle}>
-                                        <View style={[styles.button, styles.buttonSend]}>
-                                            <Text style={styles.buttonText}>Enviar</Text>
-                                        </View>
-                                    </Pressable>
-                                </View>}
-
-                        </View>
-
+                       <MovieRating movie_id={movie_id} />
 
                     </View>
 
@@ -258,16 +193,12 @@ export default function MovieDetailsScreen({ route }) {
                                 ))}
                             </Accordeon>
 
-
                         </ScrollView>
 
                     </View>
 
-
-
                 </View>
             }
-
 
         </View>
     )
@@ -375,34 +306,10 @@ const styles = StyleSheet.create({
         padding: 8,
         borderRadius: 16
     },
+
     paragraph: {
         color: '#6C757D'
-    },
-    buttonsContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: 10
-    },
-    button: {
-        paddingVertical: 8,
-        paddingHorizontal: 16,
-        borderRadius: 8,
-
-    },
-    buttonText: {
-        textAlign: 'center',
-        color: 'white',
-        fontWeight: 'bold',
-        letterSpacing: 0.6
-    },
-    buttonCancel: {
-        backgroundColor: '#D9534F'
-    },
-    buttonSend: {
-        backgroundColor: '#3F80EA'
     }
-
 
 })
 

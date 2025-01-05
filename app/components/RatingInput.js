@@ -1,6 +1,6 @@
 import { Pressable, View, StyleSheet } from 'react-native'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-export default function Rater({ maxRate, value, onChange }) {
+export default function RatingInput({ maxRate, value, onChange }) {
 
     const elements = new Array(maxRate);
     const items = elements.fill(null);
