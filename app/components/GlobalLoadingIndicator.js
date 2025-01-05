@@ -8,7 +8,7 @@ export default function GlobalLoadingIndicator() {
     const { visible, backgroundColor, message } = loadingIndicator;
     return (
         <Modal visible={visible} transparent={true} animationType="fade">
-            <View style={[styles.container, backgroundColor ? { backgroundColor } : null]}>
+            <View style={[styles.container, backgroundColor ? { backgroundColor:backgroundColor } : null]}>
                 <ActivityIndicator size="large" color="#fff" />
                 {message && <Text style={styles.message}>{message}</Text>}
             </View>
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: '#3F80EA',
     },
     message: {
         color: '#fff'
