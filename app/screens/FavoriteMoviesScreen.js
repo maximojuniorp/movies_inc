@@ -44,7 +44,7 @@ export default function FavoriteMoviesScreen() {
     }
 
     async function selectedItemHandle(movie_id) {
-        navigator.navigate('FavoriteDetails', { movie_id: movie_id })
+        navigator.navigate('MovieDetails', { movie_id: movie_id })
     }
 
     return (
@@ -55,27 +55,27 @@ export default function FavoriteMoviesScreen() {
             </View>
 
             {
-                sortedMovies.length == 0 ? 
-                <View style={styles.messageContainer}>
-                    <Text style={styles.messageTitle}>No tienes favoritas agregadas.</Text>
-                </View>
-                :
-                <FlatList
-                    contentContainerStyle={styles.listContainer}
-                    data={sortedMovies}
-                    renderItem={({ item }) => (
-                        <MovieCard
-                            id={item.id}
-                            release_date={item.release_date}
-                            title={item.title}
-                            backdrop_url={IMG_BASE_URL + item.backdrop_path}
-                            poster_url={IMG_BASE_URL + item.poster_path}
-                            vote_average={item.vote_average}
-                            onPress={selectedItemHandle}
-                        />
-                    )}
-                    keyExtractor={(itemData) => itemData.id}
-                />
+                sortedMovies.length == 0 ?
+                    <View style={styles.messageContainer}>
+                        <Text style={styles.messageTitle}>No tienes favoritas agregadas.</Text>
+                    </View>
+                    :
+                    <FlatList
+                        contentContainerStyle={styles.listContainer}
+                        data={sortedMovies}
+                        renderItem={({ item }) => (
+                            <MovieCard
+                                id={item.id}
+                                release_date={item.release_date}
+                                title={item.title}
+                                backdrop_url={IMG_BASE_URL + item.backdrop_path}
+                                poster_url={IMG_BASE_URL + item.poster_path}
+                                vote_average={item.vote_average}
+                                onPress={selectedItemHandle}
+                            />
+                        )}
+                        keyExtractor={(itemData) => itemData.id}
+                    />
             }
 
         </SafeAreaView>
@@ -118,14 +118,14 @@ const styles = StyleSheet.create({
         paddingTop: 90,
         height: 'auto'
     },
-    messageContainer:{
-        flex: 1, 
-        alignItems: 'center', 
-        justifyContent: 'center', 
+    messageContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
         padding: 10
     },
     messageTitle: {
-        textAlign: 'center', 
+        textAlign: 'center',
         fontSize: 20,
         color: '#495057'
     }

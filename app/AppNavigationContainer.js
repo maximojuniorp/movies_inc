@@ -29,7 +29,7 @@ function FavoriteStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen name='FavoriteMovies' component={FavoriteMoviesScreen} options={{ headerShown: false }} />
-      <Stack.Screen name='FavoriteDetails' component={MovieDetailsScreen} options={{ headerShown: false }} />
+      <Stack.Screen name='MovieDetails' component={MovieDetailsScreen} options={{ headerShown: false }} />
       <Stack.Screen name='Error' component={ErrorScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   )

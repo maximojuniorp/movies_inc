@@ -10,6 +10,7 @@ import { AppContext } from '../contexts/AppContext';
 
 import { IMG_BASE_URL } from '../config/appConfig'
 import MovieRating from '../components/MovieRating';
+import SimilarMoviesModal from '../components/SimilarMoviesModal';
 
 export default function MovieDetailsScreen({ route }) {
 
@@ -26,6 +27,8 @@ export default function MovieDetailsScreen({ route }) {
     const [movie, setMovie] = useState(null);
     const [credits, setCredits] = useState(null);
 
+    const [isShowSimilar, setIsShowSimilar] = useState(false);
+
 
     const isFavorite = favoriteMovies.indexOf(movie_id) >= 0;
 
@@ -34,9 +37,22 @@ export default function MovieDetailsScreen({ route }) {
         fetchMovieCredits();
     }, [])
 
-   
+    useEffect(() => {
+        fetchMovieDetails();
+    }, [movie_id]);
+
+
     function navigateBack() {
         navigation.goBack();
+    }
+
+    function onSelectedItemFromModalHandle(movie_id) {
+        navigation.navigate('MovieDetails', { movie_id })
+        setIsShowSimilar(() => false)
+    }
+
+    function closeSimilarModalHandle() {
+        setIsShowSimilar(() => false)
     }
 
     async function fetchMovieDetails() {
@@ -83,7 +99,7 @@ export default function MovieDetailsScreen({ route }) {
         }
     }
 
-   
+
     return (
         <View style={styles.container}>
 
@@ -157,7 +173,12 @@ export default function MovieDetailsScreen({ route }) {
                             </View>
                         </View>
 
-                       <MovieRating movie_id={movie_id} />
+                        <MovieRating movie_id={movie_id} />
+
+                        <Pressable
+                            onPress={() => { setIsShowSimilar(() => true) }}>
+                            <Text style={styles.similarLabel}>Ver películas similares</Text>
+                        </Pressable>
 
                     </View>
 
@@ -197,6 +218,11 @@ export default function MovieDetailsScreen({ route }) {
 
                     </View>
 
+                    <SimilarMoviesModal
+                        movie_id={movie_id}
+                        visible={isShowSimilar}
+                        onSelected={onSelectedItemFromModalHandle}
+                        onClose={closeSimilarModalHandle} />
                 </View>
             }
 
@@ -296,6 +322,16 @@ const styles = StyleSheet.create({
     cardDescription: {
         fontSize: 12,
         fontWeight: '400',
+        color: '#6C757D'
+    },
+
+    similarLabel: {
+        fontSize: 16,
+        letterSpacing: 1,
+        paddingVertical: 8,
+        paddingBottom: 12,
+        fontWeight: 500,
+        textDecorationLine: 'underline',
         color: '#6C757D'
     },
 

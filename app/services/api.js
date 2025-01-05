@@ -48,7 +48,7 @@ export const getMovieCredits = async (movie_id) => {
 
 export const getSimilar = async (movie_id) => {
     try {
-        const response = await axiosInstance.get(`/movie/${movie_id}/similar`, { params });
+        const response = await axiosInstance.get(`/movie/${movie_id}/similar`, { });
         return response.data;
     } catch (error) {
         console.error('Error fetching data:', error);
