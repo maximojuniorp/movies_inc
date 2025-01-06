@@ -15,7 +15,7 @@ This project is a mobile application built using React Native and Expo. Follow t
 ---
 
 ## Project Structure
-
+- `__tests__/` - Tests.
 - `app/` - Contains all source code.
   - `components/` - Reusable components.
   - `config/` - Configuration files.
