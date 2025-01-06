@@ -12,16 +12,18 @@ export default function RatingInput({ maxRate, value, onChange }) {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={styles.container} >
             <View style={styles.starsContainer}>
                 {items.map((e, index) => (
                     <Pressable
                         key={index}
-                        onPress={() => { onChangeHandle(index + 1) }}>
+                        onPress={() => { onChangeHandle(index + 1) }}
+                        testID={'star-btn-'+index}>
                         <Icon
                             name="star"
                             size={30}
-                            color={value >= index + 1 ? '#3F80EA' : 'gray'} />
+                            color={value >= index + 1 ? '#3F80EA' : 'gray'} 
+                            testID={'star-'+index}/>
                     </Pressable>
                 ))
                 }
