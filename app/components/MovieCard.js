@@ -5,19 +5,22 @@ export default function MovieCard({ id, poster_url, backdrop_url, title, release
 
     return (<Pressable
         onPress={() => onPress(id)}>
-        <View style={styles.card}>
+        <View style={styles.card}
+            testID='movie-card'>
             <View style={styles.cardHeader}>
                 <Image
                     alt={title}
                     resizeMode="cover"
                     source={{ uri: backdrop_url }}
-                    style={styles.cardImg} />
+                    style={styles.cardImg} 
+                    testID='movie-card-backdrop'/>
 
                 <Image
                     alt={title}
                     resizeMode="contain"
                     source={{ uri: poster_url }}
-                    style={styles.cardPoster} />
+                    style={styles.cardPoster} 
+                    testID='movie-card-poster'/>
 
                 <View style={styles.icon}>
                     <FeatherIcon
